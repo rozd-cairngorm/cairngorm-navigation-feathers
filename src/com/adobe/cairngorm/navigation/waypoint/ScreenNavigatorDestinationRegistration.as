@@ -122,15 +122,24 @@ public class ScreenNavigatorDestinationRegistration extends AbstractDestinationR
 
     private function registerDestinationFromChildren(view:ScreenNavigator, ids:Vector.<String>):void
     {
+        var proposedWaypointName:String = null;
+
         for (var i:int, length:int = ids.length; i < length; i++)
         {
             var child:ScreenNavigatorItem = view.getScreen(ids[i]);
             _hasRegisteredChildren = true;
-            registerChild(child);
+            proposedWaypointName = registerChild(child);
+        }
+
+        if (waypointName == null)
+        {
+            _waypointName = proposedWaypointName;
+
+            dispatchEvent(new WaypointEvent(waypointName));
         }
     }
 
-    private function registerChild(child:ScreenNavigatorItem):void
+    private function registerChild(child:ScreenNavigatorItem):String
     {
         var destination:String = child.properties.landmark;
 
@@ -149,17 +158,14 @@ public class ScreenNavigatorDestinationRegistration extends AbstractDestinationR
 
         destinations.push(destination);
 
-        if (waypointName == null)
+        var waypoint:String = NavigationUtil.getParent(destination);
+
+        if (waypoint == null)
         {
-            _waypointName = NavigationUtil.getParent(destination);
-
-            if (waypointName == null)
-            {
-                throw new Error("A waypoint cannot be found on destination: " + destination);
-            }
-
-            dispatchEvent(new WaypointEvent(waypointName));
+            throw new Error("A waypoint cannot be found on destination: " + destination);
         }
+
+        return waypoint;
     }
 
     private function unregisterChild(child:ScreenNavigatorItem):void

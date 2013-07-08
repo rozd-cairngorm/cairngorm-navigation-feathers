@@ -48,16 +48,33 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
 
     public function getDefaultDestination():String
     {
-        var id:String = view.getScreenIDs()[0];
-
-        var child:ScreenNavigatorItem = view.getScreen(id);
-
         var destination:String;
 
-        if (child != null)
+        var ids:Vector.<String> = view.getScreenIDs();
+
+        var child:ScreenNavigatorItem;
+
+        for (var i:int = 0, n:int = ids.length; i < n; i++)
         {
-            _selectedIndex = 0;
-            destination = getDestination(child);
+            child = view.getScreen(ids[i]);
+
+            if (child != null && child.properties.isDefault)
+            {
+                _selectedIndex = i;
+                destination = getDestination(child);
+                break;
+            }
+        }
+
+        if (destination == null)
+        {
+            child = view.getScreen(ids[0]);
+
+            if (child != null)
+            {
+                _selectedIndex = 0;
+                destination = getDestination(child);
+            }
         }
 
         return destination;
