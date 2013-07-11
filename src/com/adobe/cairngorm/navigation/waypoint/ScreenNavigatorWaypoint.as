@@ -12,13 +12,6 @@ import com.adobe.cairngorm.navigation.NavigationEvent;
 import feathers.controls.ScreenNavigator;
 import feathers.controls.ScreenNavigatorItem;
 
-import feathers.core.FeathersControl;
-
-import flash.events.EventDispatcher;
-
-import starling.display.DisplayObject;
-
-import starling.display.DisplayObjectContainer;
 import starling.events.Event;
 
 public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoint
@@ -83,8 +76,16 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
     public function subscribeToViewChange(view:Object):void
     {
         this.view = view as ScreenNavigator;
-        // TODO: remove event listener
-        this.view.addEventListener(Event.CHANGE, changeHandler);
+
+        view.addEventListener(Event.CHANGE, changeHandler);
+    }
+
+    public function unsubscribeFromViewChange():void
+    {
+        if (view != null)
+        {
+            view.removeEventListener(Event.CHANGE, changeHandler);
+        }
     }
 
     public function handleNavigationChange(event:NavigationEvent):void
