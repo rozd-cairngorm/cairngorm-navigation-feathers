@@ -10,7 +10,7 @@ package com.adobe.cairngorm.navigation.waypoint
 import com.adobe.cairngorm.navigation.NavigationEvent;
 
 import feathers.controls.ScreenNavigator;
-import feathers.controls.ScreenNavigatorItem;
+import feathers.controls.ScreenNavigatorItemExt;
 
 import starling.events.Event;
 
@@ -45,13 +45,13 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
 
         var ids:Vector.<String> = view.getScreenIDs();
 
-        var child:ScreenNavigatorItem;
+        var child:ScreenNavigatorItemExt;
 
         for (var i:int = 0, n:int = ids.length; i < n; i++)
         {
             child = view.getScreen(ids[i]);
 
-            if (child != null && child.properties.isDefault)
+            if (child != null && child.isDefault)
             {
                 _selectedIndex = i;
                 destination = getDestination(child);
@@ -90,7 +90,7 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
 
     public function handleNavigationChange(event:NavigationEvent):void
     {
-        var child:ScreenNavigatorItem = findChild(event.destination);
+        var child:ScreenNavigatorItemExt = findChild(event.destination);
 
         if (view.activeScreenID != event.destination)
         {
@@ -102,18 +102,18 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
     //  Methods: Internal
     //---------------------------------
 
-    private function getDestination(child:ScreenNavigatorItem):String
+    private function getDestination(child:ScreenNavigatorItemExt):String
     {
-        return child.properties.landmark;
+        return child.landmark;
     }
 
-    private function findChild(destination:String):ScreenNavigatorItem
+    private function findChild(destination:String):ScreenNavigatorItemExt
     {
         var ids:Vector.<String> = view.getScreenIDs();
 
         for (var i:int; i < ids.length; i++)
         {
-            var child:ScreenNavigatorItem = view.getScreen(ids[i]);
+            var child:ScreenNavigatorItemExt = view.getScreen(ids[i]);
 
             if (getDestination(child) == destination)
             {
@@ -135,7 +135,7 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
 
         var id:String = view.activeScreenID;
 
-        var child:ScreenNavigatorItem = view.getScreen(id);
+        var child:ScreenNavigatorItemExt = view.getScreen(id) as ScreenNavigatorItemExt;
 
         var destination:String = getDestination(child);
 

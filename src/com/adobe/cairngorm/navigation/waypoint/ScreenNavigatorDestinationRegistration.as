@@ -14,7 +14,7 @@ import com.adobe.cairngorm.navigation.core.INavigationRegistry;
 import com.adobe.cairngorm.navigation.core.NavigationController;
 
 import feathers.controls.ScreenNavigator;
-import feathers.controls.ScreenNavigatorItem;
+import feathers.controls.ScreenNavigatorItemExt;
 
 import feathers.events.FeathersEventType;
 
@@ -102,7 +102,7 @@ public class ScreenNavigatorDestinationRegistration extends AbstractDestinationR
 
     private function handleChildAdd(event:Event):void
     {
-        var child:ScreenNavigatorItem = event.target as ScreenNavigatorItem;
+        var child:ScreenNavigatorItemExt = event.target as ScreenNavigatorItemExt;
 
         if(child)
         {
@@ -112,7 +112,7 @@ public class ScreenNavigatorDestinationRegistration extends AbstractDestinationR
 
     private function handleChildRemove(event:Event):void
     {
-        var child:ScreenNavigatorItem = event.target as ScreenNavigatorItem;
+        var child:ScreenNavigatorItemExt = event.target as ScreenNavigatorItemExt;
 
         if(child)
         {
@@ -126,7 +126,7 @@ public class ScreenNavigatorDestinationRegistration extends AbstractDestinationR
 
         for (var i:int, length:int = ids.length; i < length; i++)
         {
-            var child:ScreenNavigatorItem = view.getScreen(ids[i]);
+            var child:ScreenNavigatorItemExt = view.getScreen(ids[i]) as ScreenNavigatorItemExt;
             _hasRegisteredChildren = true;
             proposedWaypointName = registerChild(child);
         }
@@ -139,9 +139,9 @@ public class ScreenNavigatorDestinationRegistration extends AbstractDestinationR
         }
     }
 
-    private function registerChild(child:ScreenNavigatorItem):String
+    private function registerChild(child:ScreenNavigatorItemExt):String
     {
-        var destination:String = child.properties.landmark;
+        var destination:String = child.landmark;
 
         if (destination == null || destination == "")
         {
@@ -168,9 +168,9 @@ public class ScreenNavigatorDestinationRegistration extends AbstractDestinationR
         return waypoint;
     }
 
-    private function unregisterChild(child:ScreenNavigatorItem):void
+    private function unregisterChild(child:ScreenNavigatorItemExt):void
     {
-        var destination:String = child.properties.landmark;
+        var destination:String = child.landmark;
         if (destination == null || destination == "")
         {
             throw new Error("Cannot find a destination from automationName on: " + child);
