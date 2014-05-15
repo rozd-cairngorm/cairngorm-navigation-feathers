@@ -8,10 +8,15 @@
 package feathers.controls
 {
 import starling.display.DisplayObject;
-import starling.display.DisplayObject;
 
 public class ScreenNavigatorItemExt extends ScreenNavigatorItem
 {
+    //--------------------------------------------------------------------------
+    //
+    //  Constructor
+    //
+    //--------------------------------------------------------------------------
+
     public function ScreenNavigatorItemExt(screen:Object = null, events:Object = null, properties:Object = null, navigation:Object = null, reuse:Boolean = false)
     {
         super(screen, events, properties);
@@ -23,11 +28,23 @@ public class ScreenNavigatorItemExt extends ScreenNavigatorItem
         this.reuse = reuse;
     }
 
+    //--------------------------------------------------------------------------
+    //
+    //  Variables
+    //
+    //--------------------------------------------------------------------------
+
     public var landmark:String;
 
     public var isDefault:Boolean;
 
     public var reuse:Boolean;
+
+    //--------------------------------------------------------------------------
+    //
+    //  Overridden methods
+    //
+    //--------------------------------------------------------------------------
 
     override internal function getScreen():DisplayObject
     {

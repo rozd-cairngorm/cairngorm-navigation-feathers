@@ -86,6 +86,8 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
         {
             view.removeEventListener(Event.CHANGE, changeHandler);
         }
+
+        this.view = null;
     }
 
     public function handleNavigationChange(event:NavigationEvent):void
