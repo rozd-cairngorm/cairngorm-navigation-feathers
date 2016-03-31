@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_cairngorm-navigation-feathers" default="compile.module.cairngorm-navigation-feathers">
+  <dirname property="module.cairngorm-navigation-feathers.basedir" file="${ant.file.module_cairngorm-navigation-feathers}"/>
+  
+  <property name="module.jdk.home.cairngorm-navigation-feathers" value="${jdk.home.17.0.0.96}"/>
+  <property name="module.jdk.bin.cairngorm-navigation-feathers" value="${jdk.bin.17.0.0.96}"/>
+  <property name="module.jdk.classpath.cairngorm-navigation-feathers" value="jdk.classpath.17.0.0.96"/>
+  
+  <property name="compiler.args.cairngorm-navigation-feathers" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="cairngorm-navigation-feathers.output.dir" value="//../../mobitile/client/mobitile/out/production/cairngorm-navigation-feathers"/>
+  <property name="cairngorm-navigation-feathers.testoutput.dir" value="//../../mobitile/client/mobitile/out/test/cairngorm-navigation-feathers"/>
+  
+  <path id="cairngorm-navigation-feathers.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="cairngorm-navigation-feathers.module.production.classpath">
+    <path refid="${module.jdk.classpath.cairngorm-navigation-feathers}"/>
+    <pathelement location="${cairngorm-navigation.output.dir}"/>
+    <fileset dir="${basedir}/../../../rozdonmobile/cairngorm-navigation/libs">
+      <patternset refid="library.patterns"/>
+    </fileset>
+    <fileset dir="${basedir}/../../../rozdonmobile/cairngorm-navigation-feathers/libs">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  <path id="cairngorm-navigation-feathers.runtime.production.module.classpath">
+    <pathelement location="${cairngorm-navigation-feathers.output.dir}"/>
+    <path refid="cairngorm-navigation.runtime.production.module.classpath"/>
+    <fileset dir="${basedir}/../../../rozdonmobile/cairngorm-navigation-feathers/libs">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  <path id="cairngorm-navigation-feathers.module.classpath">
+    <path refid="${module.jdk.classpath.cairngorm-navigation-feathers}"/>
+    <pathelement location="${cairngorm-navigation-feathers.output.dir}"/>
+    <pathelement location="${cairngorm-navigation.testoutput.dir}"/>
+    <pathelement location="${cairngorm-navigation.output.dir}"/>
+    <fileset dir="${basedir}/../../../rozdonmobile/cairngorm-navigation/libs">
+      <patternset refid="library.patterns"/>
+    </fileset>
+    <fileset dir="${basedir}/../../../rozdonmobile/cairngorm-navigation-feathers/libs">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  <path id="cairngorm-navigation-feathers.runtime.module.classpath">
+    <pathelement location="${cairngorm-navigation-feathers.testoutput.dir}"/>
+    <pathelement location="${cairngorm-navigation-feathers.output.dir}"/>
+    <path refid="cairngorm-navigation.runtime.module.classpath"/>
+    <fileset dir="${basedir}/../../../rozdonmobile/cairngorm-navigation-feathers/libs">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.cairngorm-navigation-feathers">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.cairngorm-navigation-feathers">
+    <patternset refid="excluded.from.module.cairngorm-navigation-feathers"/>
+  </patternset>
+  
+  <path id="cairngorm-navigation-feathers.module.sourcepath">
+    <dirset dir="/">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.cairngorm-navigation-feathers" depends="compile.module.cairngorm-navigation-feathers.production,compile.module.cairngorm-navigation-feathers.tests" description="Compile module cairngorm-navigation-feathers"/>
+  
+  <target name="compile.module.cairngorm-navigation-feathers.production" depends="register.custom.compilers,compile.module.cairngorm-navigation" description="Compile module cairngorm-navigation-feathers; production classes">
+    <mkdir dir="${cairngorm-navigation-feathers.output.dir}"/>
+    <javac2 destdir="${cairngorm-navigation-feathers.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.cairngorm-navigation-feathers}/javac">
+      <compilerarg line="${compiler.args.cairngorm-navigation-feathers}"/>
+      <bootclasspath refid="cairngorm-navigation-feathers.module.bootclasspath"/>
+      <classpath refid="cairngorm-navigation-feathers.module.production.classpath"/>
+      <src refid="cairngorm-navigation-feathers.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.cairngorm-navigation-feathers"/>
+    </javac2>
+    
+    <copy todir="${cairngorm-navigation-feathers.output.dir}">
+      <fileset dir="//src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.cairngorm-navigation-feathers.tests" depends="register.custom.compilers,compile.module.cairngorm-navigation-feathers.production" description="compile module cairngorm-navigation-feathers; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.cairngorm-navigation-feathers" description="cleanup module">
+    <delete dir="${cairngorm-navigation-feathers.output.dir}"/>
+    <delete dir="${cairngorm-navigation-feathers.testoutput.dir}"/>
+  </target>
+</project>

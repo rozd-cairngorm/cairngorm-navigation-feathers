@@ -46,7 +46,7 @@ public class ScreenNavigatorItemExt extends ScreenNavigatorItem
     //
     //--------------------------------------------------------------------------
 
-    override internal function getScreen():DisplayObject
+    override public function getScreen():DisplayObject
     {
         var instance:DisplayObject = super.getScreen();
 
