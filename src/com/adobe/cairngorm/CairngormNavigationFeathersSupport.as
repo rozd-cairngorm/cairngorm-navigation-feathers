@@ -8,12 +8,14 @@
 package com.adobe.cairngorm
 {
 import com.adobe.cairngorm.navigation.waypoint.ScreenNavigatorWaypoint;
+import com.adobe.cairngorm.navigation.waypoint.StackScreenNavigatorWaypoint;
 
 public class CairngormNavigationFeathersSupport
 {
     public static function initialize():void
     {
         ScreenNavigatorWaypoint;
+        StackScreenNavigatorWaypoint;
     }
 
     public function CairngormNavigationFeathersSupport()
