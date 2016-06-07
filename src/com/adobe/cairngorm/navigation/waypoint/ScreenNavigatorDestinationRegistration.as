@@ -104,7 +104,7 @@ public class ScreenNavigatorDestinationRegistration extends AbstractDestinationR
     {
         var child:ScreenNavigatorItemExt = event.target as ScreenNavigatorItemExt;
 
-        if(child)
+        if (child)
         {
             registerChild(child);
         }
@@ -128,6 +128,7 @@ public class ScreenNavigatorDestinationRegistration extends AbstractDestinationR
         {
             var child:ScreenNavigatorItemExt = view.getScreen(ids[i]) as ScreenNavigatorItemExt;
             _hasRegisteredChildren = true;
+            if (!child) continue;
             proposedWaypointName = registerChild(child);
         }
 

@@ -49,7 +49,7 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
 
         for (var i:int = 0, n:int = ids.length; i < n; i++)
         {
-            child = view.getScreen(ids[i]);
+            child = view.getScreen(ids[i]) as ScreenNavigatorItemExt;
 
             if (child != null && child.isDefault)
             {
@@ -59,16 +59,16 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
             }
         }
 
-        if (destination == null)
-        {
-            child = view.getScreen(ids[0]);
-
-            if (child != null)
-            {
-                _selectedIndex = 0;
-                destination = getDestination(child);
-            }
-        }
+//        if (destination == null)
+//        {
+//            child = view.getScreen(ids[0]);
+//
+//            if (child != null)
+//            {
+//                _selectedIndex = 0;
+//                destination = getDestination(child);
+//            }
+//        }
 
         return destination;
     }
@@ -115,9 +115,9 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
 
         for (var i:int; i < ids.length; i++)
         {
-            var child:ScreenNavigatorItemExt = view.getScreen(ids[i]);
+            var child:ScreenNavigatorItemExt = view.getScreen(ids[i]) as ScreenNavigatorItemExt;
 
-            if (getDestination(child) == destination)
+            if (child != null && getDestination(child) == destination)
             {
                 return child;
             }
@@ -138,6 +138,8 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
         var id:String = view.activeScreenID;
 
         var child:ScreenNavigatorItemExt = view.getScreen(id) as ScreenNavigatorItemExt;
+
+        if (!child) return;
 
         var destination:String = getDestination(child);
 
