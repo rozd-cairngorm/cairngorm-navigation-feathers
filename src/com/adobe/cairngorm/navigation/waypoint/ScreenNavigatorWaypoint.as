@@ -26,7 +26,7 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
     {
         super();
 
-        _registration = new ScreenNavigatorDestinationRegistration();
+        _registration = new ImmediateScreenNavigatorDestinationRegistration();
     }
 
     //--------------------------------------------------------------------------
@@ -143,9 +143,9 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
 
         var destination:String = getDestination(child);
 
-        var newSelectedIndex:int = view.getScreenIDs().indexOf(id);
+        var newSelectedIndex:int = view.getScreenIDs().indexOf(destination);
 
-        if (newSelectedIndex != _selectedIndex)
+        if (view.activeScreenID != destination)
         {
             _selectedIndex = newSelectedIndex;
 
