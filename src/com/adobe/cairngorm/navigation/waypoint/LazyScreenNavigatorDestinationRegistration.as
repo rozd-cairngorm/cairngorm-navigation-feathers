@@ -31,7 +31,7 @@ import starling.display.DisplayObjectContainer;
 import starling.events.Event;
 
 [Event(name="waypointFound", type="com.adobe.cairngorm.navigation.waypoint.WaypointEvent")]
-public class LazyNavigatorDestinationRegistration extends AbstractDestinationRegistration implements IDestinationRegistration
+public class LazyScreenNavigatorDestinationRegistration extends AbstractDestinationRegistration implements IDestinationRegistration
 {
     //--------------------------------------------------------------------------
     //
@@ -39,7 +39,7 @@ public class LazyNavigatorDestinationRegistration extends AbstractDestinationReg
     //
     //--------------------------------------------------------------------------
 
-    public function LazyNavigatorDestinationRegistration()
+    public function LazyScreenNavigatorDestinationRegistration()
     {
         super();
     }

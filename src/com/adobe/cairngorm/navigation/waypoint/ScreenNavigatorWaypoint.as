@@ -10,6 +10,8 @@ package com.adobe.cairngorm.navigation.waypoint
 import com.adobe.cairngorm.navigation.NavigationEvent;
 
 import feathers.controls.ScreenNavigator;
+
+import feathers.controls.ScreenNavigator;
 import feathers.controls.ScreenNavigatorItemExt;
 
 import starling.events.Event;
@@ -26,7 +28,7 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
     {
         super();
 
-        _registration = new ImmediateScreenNavigatorDestinationRegistration();
+        _registration = new LazyScreenNavigatorDestinationRegistration();
     }
 
     //--------------------------------------------------------------------------
@@ -43,13 +45,13 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
     {
         var destination:String;
 
-        var ids:Vector.<String> = view.getScreenIDs();
+        var ids:Vector.<String> = ScreenNavigator(view).getScreenIDs();
 
         var child:ScreenNavigatorItemExt;
 
         for (var i:int = 0, n:int = ids.length; i < n; i++)
         {
-            child = view.getScreen(ids[i]) as ScreenNavigatorItemExt;
+            child = ScreenNavigator(view).getScreen(ids[i]) as ScreenNavigatorItemExt;
 
             if (child != null && child.isDefault)
             {
@@ -82,9 +84,9 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
 
     public function unsubscribeFromViewChange():void
     {
-        if (view != null)
+        if (ScreenNavigator(view) != null)
         {
-            view.removeEventListener(Event.CHANGE, changeHandler);
+            ScreenNavigator(view).removeEventListener(Event.CHANGE, changeHandler);
         }
 
         this.view = null;
@@ -94,9 +96,9 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
     {
         var child:ScreenNavigatorItemExt = findChild(event.destination);
 
-        if (view.activeScreenID != event.destination)
+        if (ScreenNavigator(view).activeScreenID != event.destination)
         {
-            view.showScreen(event.destination);
+            ScreenNavigator(view).showScreen(event.destination);
         }
     }
 
@@ -145,12 +147,9 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
 
         var newSelectedIndex:int = view.getScreenIDs().indexOf(destination);
 
-        if (view.activeScreenID != destination)
-        {
-            _selectedIndex = newSelectedIndex;
+        _selectedIndex = newSelectedIndex;
 
-            navigateTo(destination);
-        }
+        navigateTo(destination);
     }
 }
 }
