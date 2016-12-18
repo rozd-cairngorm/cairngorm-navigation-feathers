@@ -10,9 +10,10 @@ package com.adobe.cairngorm.navigation.waypoint
 import com.adobe.cairngorm.navigation.NavigationEvent;
 
 import feathers.controls.ScreenNavigator;
-
-import feathers.controls.ScreenNavigator;
 import feathers.controls.ScreenNavigatorItemExt;
+
+import flash.utils.clearInterval;
+import flash.utils.setInterval;
 
 import starling.events.Event;
 
@@ -30,6 +31,14 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
 
         _registration = new LazyScreenNavigatorDestinationRegistration();
     }
+
+    //--------------------------------------------------------------------------
+    //
+    //  Methods
+    //
+    //--------------------------------------------------------------------------
+
+    protected var ignoreNextChangeEvent:Boolean = false;
 
     //--------------------------------------------------------------------------
     //
@@ -94,11 +103,19 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
 
     public function handleNavigationChange(event:NavigationEvent):void
     {
-        var child:ScreenNavigatorItemExt = findChild(event.destination);
+        var screenItem:ScreenNavigatorItemExt = findChild(event.destination);
 
         if (ScreenNavigator(view).activeScreenID != event.destination)
         {
-            ScreenNavigator(view).showScreen(event.destination);
+            var intervalId = setInterval(function()
+            {
+                clearInterval(intervalId);
+
+                ignoreNextChangeEvent = true;
+                ScreenNavigator(view).showScreen(event.destination);
+                ignoreNextChangeEvent = false;
+
+            }, 0 );
         }
     }
 
@@ -135,19 +152,22 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
 
     private function changeHandler(event:Event):void
     {
-        var view:ScreenNavigator = event.target as ScreenNavigator;
+        var navigator:ScreenNavigator = event.target as ScreenNavigator;
 
-        var id:String = view.activeScreenID;
+        var id:String = navigator.activeScreenID;
 
-        var child:ScreenNavigatorItemExt = view.getScreen(id) as ScreenNavigatorItemExt;
+        var screenItem:ScreenNavigatorItemExt = navigator.getScreen(id) as ScreenNavigatorItemExt;
 
-        if (!child) return;
+        if (!screenItem) return;
 
-        var destination:String = getDestination(child);
+        var destination:String = getDestination(screenItem);
 
-        var newSelectedIndex:int = view.getScreenIDs().indexOf(destination);
+        var newSelectedIndex:int = navigator.getScreenIDs().indexOf(destination);
 
         _selectedIndex = newSelectedIndex;
+
+        if (ignoreNextChangeEvent)
+            return;
 
         navigateTo(destination);
     }
