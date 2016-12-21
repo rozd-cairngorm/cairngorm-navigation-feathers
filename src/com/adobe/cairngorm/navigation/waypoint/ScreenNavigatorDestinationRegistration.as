@@ -62,12 +62,7 @@ public class ScreenNavigatorDestinationRegistration extends AbstractDestinationR
 
     override public function unregisterDestinations():void
     {
-        for each (var destination:String in destinations)
-        {
-            controller.unregisterDestination(destination);
-        }
-
-        destinations = null;
+        super.unregisterDestinations();
 
         view.removeEventListener(Event.ADDED, handleChildAdd);
         view.removeEventListener(Event.REMOVED, handleChildRemove);

@@ -40,12 +40,7 @@ public class ImmediateScreenNavigatorDestinationRegistration extends AbstractDes
 
     override public function unregisterDestinations():void
     {
-        for each (var destination:String in destinations)
-        {
-            controller.unregisterDestination(destination);
-        }
-
-        destinations = null;
+        super.unregisterDestinations();
     }
 
     //--------------------------------------------------------------------------
