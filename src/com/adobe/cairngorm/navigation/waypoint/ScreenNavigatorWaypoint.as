@@ -38,8 +38,6 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
     //
     //--------------------------------------------------------------------------
 
-    protected var ignoreNextChangeEvent:Boolean = false;
-
     //--------------------------------------------------------------------------
     //
     //  Methods
@@ -107,15 +105,7 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
 
         if (ScreenNavigator(view).activeScreenID != event.destination)
         {
-            var intervalId = setInterval(function()
-            {
-                clearInterval(intervalId);
-
-                ignoreNextChangeEvent = true;
-                ScreenNavigator(view).showScreen(event.destination);
-                ignoreNextChangeEvent = false;
-
-            }, 0 );
+            ScreenNavigator(view).showScreen(event.destination);
         }
     }
 
@@ -165,9 +155,6 @@ public class ScreenNavigatorWaypoint extends AbstractWaypoint implements IWaypoi
         var newSelectedIndex:int = navigator.getScreenIDs().indexOf(destination);
 
         _selectedIndex = newSelectedIndex;
-
-        if (ignoreNextChangeEvent)
-            return;
 
         navigateTo(destination);
     }
